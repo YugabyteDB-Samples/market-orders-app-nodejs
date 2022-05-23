@@ -4,7 +4,7 @@ This application subscribes to the [PubNub Market Orders Stream](https://www.pub
 ## Run using YugabyteDB Managed
 1. [Sign up for YugabyteDB Managed](https://docs.yugabyte.com/preview/yugabyte-cloud/cloud-quickstart/) and create a free cluster.  Additionally, follow this [guide](https://docs.yugabyte.com/preview/yugabyte-cloud/cloud-quickstart/cloud-build-apps/cloud-add-ip/#download-your-cluster-certificate) to download your cluster CA certificate and set up your cluster IP allow list. 
 
-2. Create Database named 'market_orders_sample'
+2. Create Database named `market_orders_sample`
 
 3. Run the following to install dependencies (first time only):
 ```
@@ -15,7 +15,7 @@ npm install
 4. Configure your DATABASE_URL environment variable in the .env file:
 
 ```
-# formmat
+# format
 DATABASE_URL="postgresql://[DB_USERNAME]:[DB_PASSWORD]@[DB_HOST]:[DB_PORT]/
 market_orders_sample?schema=public&sslrootcert=[PATH_TO_ROOT_CERT]"
 
@@ -43,7 +43,7 @@ node server.js
 
 1. [Install YugabyteDB](https://docs.yugabyte.com/quick-start/install/).
 
-2. Create Database named 'market_orders_sample'
+2. Create Database named `market_orders_sample`
 
 3. Run the following to install dependencies (first time only):
 ```
@@ -54,7 +54,7 @@ npm install
 4. Configure your DATABASE_URL environment variable in the .env file:
 
 ```
-# formmat
+# format
 DATABASE_URL="postgresql://[DB_USERNAME]:[DB_PASSWORD]@[DB_HOST]:[DB_PORT]/
 market_orders_sample?schema=public"
 
