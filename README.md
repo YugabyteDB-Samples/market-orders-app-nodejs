@@ -57,9 +57,10 @@ npx prisma db seed
 6. Run the sample application:
 ```
 cd market-orders-client
+npm install
 npm run build
 cd ..
-npm start;
+npm start
 open localhost:8000
 ```
 
@@ -124,9 +125,10 @@ npx prisma db seed
 
 ```
 cd market-orders-client
+npm install
 npm run build
 cd ..
-npm start;
+npm start
 open localhost:8000
 ```
 

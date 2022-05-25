@@ -79,7 +79,7 @@ function App() {
               <tr>
                 <td>{topBuyer.first_name}</td>
                 <td>{topBuyer.last_name}</td>
-                <td>${USNumberFormat.format(topBuyer.total_portfolio_value)}</td>
+                <td>${USNumberFormat.format(topBuyer.total_portfolio_value || 0)}</td>
               </tr>
           </tbody>
         </Table>
