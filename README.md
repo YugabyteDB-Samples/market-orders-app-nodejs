@@ -30,13 +30,43 @@ NOTE: Certificate path is relative to the `market-orders-app-nodejs/prisma` dire
 5. Run the following to initialize database:
 
 ```
-npx prisma migrate dev --name "init"
+# create tables and relations
+npx prisma db execute --file prisma/db_schema.sql --schema prisma/schema.prisma
+
+# introspect Postgres schema to create Prisma schema
+npx prisma db pull
+
+# manually add the materialized view to the schema.prisma file 
+# views are not introspected by Prisma
+model top_buyers_view {
+  first_name String
+  last_name String
+  total_portfolio_value Int
+
+  @@unique([first_name, last_name, total_portfolio_value])
+}
+
+# generate prisma client
+npx prisma generate
+
+# seed users in database
+npx prisma db seed
+
 ```
 
 6. Run the sample application:
-
 ```
-node server.js
+cd market-orders-client
+npm run build
+cd ..
+npm start;
+open localhost:8000
+```
+
+7. Development (optional)
+```
+# This will automatically open browser window and proxy requests to the server
+# npm run start-dev
 ```
 
 ## Run locally
@@ -66,11 +96,42 @@ market_orders_sample?schema=public"
 5. Run the following to initialize database:
 
 ```
-npx prisma migrate dev --name "init"
+# create tables and relations
+npx prisma db execute --file prisma/db_schema.sql --schema prisma/schema.prisma
+
+# introspect Postgres schema to create Prisma schema
+npx prisma db pull
+
+# manually add the materialized view to the schema.prisma file 
+# views are not introspected by Prisma
+model top_buyers_view {
+  first_name String
+  last_name String
+  total_portfolio_value Int
+
+  @@unique([first_name, last_name, total_portfolio_value])
+}
+
+# generate prisma client
+npx prisma generate
+
+# seed users in database
+npx prisma db seed
+
 ```
 
-6. Run the sample application to populate database:
+6. Run the sample application:
 
 ```
-node server.js
+cd market-orders-client
+npm run build
+cd ..
+npm start;
+open localhost:8000
+```
+
+7. Development (optional)
+```
+# This will automatically open browser window and proxy requests to the server
+# npm run start-dev
 ```

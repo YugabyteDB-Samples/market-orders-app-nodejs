@@ -1,9 +1,18 @@
 {
   "dependencies": {
     "@prisma/client": "^3.14.0",
+    "express": "^4.18.1",
     "pubnub": "^5.0.1"
   },
   "devDependencies": {
+    "nodemon": "^2.0.16",
     "prisma": "^3.14.0"
+  },
+  "scripts": {
+    "start": "nodemon server.js & open localhost:8000",
+    "start-dev": "nodemon server.js & npm --prefix ./market-orders-client start"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }

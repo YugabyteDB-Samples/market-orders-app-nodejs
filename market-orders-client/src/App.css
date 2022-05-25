@@ -1,0 +1,15 @@
+.main-content {
+  margin: 10px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-bottom: 10px solid black;
+}
+
+.spinner-grow {
+  margin-left: 5px;
+}

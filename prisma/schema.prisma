@@ -7,11 +7,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model trade {
-  id             String  @id @default(uuid())
+model Trade {
+  id             Int      @id @default(autoincrement())
   bid_price      Decimal
   symbol         String
-  trade_time      DateTime @default(now())
+  trade_time     DateTime @default(now())
   trade_type     String
   order_quantity Int
+  user_id        Int      @default(autoincrement())
+  User           User     @relation(fields: [user_id], references: [id])
+}
+
+model User {
+  id         Int     @id @default(autoincrement())
+  first_name String
+  last_name  String
+  email      String  @unique
+  Trade      Trade[]
+}
+
+model top_buyers_view {
+  first_name String
+  last_name String
+  total_portfolio_value Int
+
+  @@unique([first_name, last_name, total_portfolio_value])
 }
