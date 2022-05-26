@@ -18,7 +18,7 @@ function App() {
       const json = await data.json();
       setTrades(json);
     } catch (e) {
-      throw e;
+      console.log(e);
     }
   }
 
@@ -30,7 +30,7 @@ function App() {
       setTopSymbols(json.topSymbols);
       setTotalTrades(json.totalTrades);
     } catch (e) {
-      throw e;
+      console.log(e)
     }
   }
 
@@ -46,7 +46,7 @@ function App() {
       })
       setIsRunning(!isRunning);
     } catch (e) {
-      throw e;
+      console.log(e)
     }
   }
   

@@ -17,11 +17,11 @@ npm install
 ```
 # format
 DATABASE_URL="postgresql://[DB_USERNAME]:[DB_PASSWORD]@[DB_HOST]:[DB_PORT]/
-market_orders_sample?schema=public&sslrootcert=[PATH_TO_ROOT_CERT]"
+market_orders_sample?schema=public&statement_cache_size=0&sslrootcert=[PATH_TO_ROOT_CERT]"
 
 # example
 DATABASE_URL="postgresql://admin:qwerty12345@us-west-2.foobarbaz.aws.ybdb.io:5433/
-market_orders_sample?schema=public&sslrootcert=../certs/root.crt"
+market_orders_sample?schema=public&statement_cache_size=0&sslrootcert=../certs/root.crt"
 ```
 
 NOTE: Certificate path is relative to the `market-orders-app-nodejs/prisma` directory
@@ -87,11 +87,11 @@ npm install
 ```
 # format
 DATABASE_URL="postgresql://[DB_USERNAME]:[DB_PASSWORD]@[DB_HOST]:[DB_PORT]/
-market_orders_sample?schema=public"
+market_orders_sample?schema=public&statement_cache_size=0"
 
 # example
 DATABASE_URL="postgresql://yugabyte:yugabyte@127.0.0.1:5433/
-market_orders_sample?schema=public"
+market_orders_sample?schema=public&statement_cache_size=0"
 ```
 
 5. Run the following to initialize database:

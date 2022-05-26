@@ -24,10 +24,15 @@ const unsubscribe = function() {
 
 async function initialize() {
     // used for random selection on each trade
-    const users = await prisma.user.findMany();
+    let users;
+    try {
+        users = await prisma.user.findMany();
+    } catch (e) {
+        console.log(e);
+    }
 
     subscribe();
-    
+
     pubnub.addListener({
         status: function(statusEvent) {
             if (statusEvent.category === "PNConnectedCategory") {
@@ -39,27 +44,27 @@ async function initialize() {
             // console.log(messageEvent);
             // Index of randomly selected user
             const i = Math.floor(Math.random() * users.length)
-            addTradeToDB(messageEvent.message, users[i]?.id).catch((e) => {
-                throw e;
-            })
-            .finally(async () => {
-                await prisma.$disconnect();
-            });
+            addTradeToDB(messageEvent.message, users[i]?.id)
         }
     })
 }
 
 
 async function addTradeToDB(trade, userId) {
-
     delete trade.timestamp;
     trade.user_id = userId;
-    const committedTrade = await prisma.trade.create({
-        data: trade || {}
-    })
+    let committedTrade;
+    try {
+        committedTrade = await prisma.trade.create({
+            data: trade || {}
+        })
+        console.log("Committed Trade", committedTrade)
+    } catch (e) {
+        console.log(e)
+    }
 
     // Uncomment if you'd like to see committed trades printed to your terminal
     // console.log(`Trade committed to DB: ${JSON.stringify(committedTrade)}`)
 }
 
-module.exports = {subscribe, unsubscribe, initialize};
+module.exports = {subscribe, unsubscribe, initialize, prisma};

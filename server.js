@@ -1,7 +1,6 @@
 const express = require("express");
 const App = express();
-const PrismaClient =  require('@prisma/client').PrismaClient;
-const prisma = new PrismaClient();
+const prisma = require('./stream').prisma;
 require("./stream").initialize();
 const {subscribe, unsubscribe} = require("./stream");
 App.use(express.json());
@@ -23,11 +22,10 @@ App.get("/trades", async (req, res) => {
     query.include = {User: true};
     let trades;
     try {
-     trades = await prisma.trade.findMany(query)
+        trades = await prisma.trade.findMany(query)
     } catch (e) {
-        throw e;
+        console.log(e)
     } finally {
-        await prisma.$disconnect();
         res.json(trades)
     }
 })
@@ -66,9 +64,8 @@ App.get("/stats", async (req,res) => {
         })
         totalTrades = totalTrades._count?.id || 0
     } catch(e) {
-        throw e
+        console.log(e)
     } finally {
-        await prisma.$disconnect();
         res.json({topBuyers, topSymbols, totalTrades});
     }
 })
