@@ -3,10 +3,14 @@ import {useEffect, useState} from "react"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from 'react-bootstrap/Table'
 import Spinner from 'react-bootstrap/Spinner'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 function App() {
   const [trades, setTrades] = useState([]);
-  const [topBuyer, setTopBuyer] = useState({});
+  const [topBuyers, setTopBuyers] = useState([]);
+  const [topSymbols, setTopSymbols] = useState([]);
+  const [totalTrades, setTotalTrades] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   async function getTrades() {
     try {
@@ -22,14 +26,15 @@ function App() {
     try {
       const data = await fetch("/stats");
       const json = await data.json();
-      setTopBuyer(json);
+      setTopBuyers(json.topBuyers);
+      setTopSymbols(json.topSymbols);
+      setTotalTrades(json.totalTrades);
     } catch (e) {
       throw e;
     }
   }
 
   async function toggleStreaming() {
-    console.log(isRunning)
     try {
       await fetch("/controls", {
         method: 'POST',
@@ -66,23 +71,64 @@ function App() {
       </div>
 
       <div className="main-content">
-        <h3>Top Buyer</h3>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Total Portfolio Value</th>
-            </tr>
-          </thead>
-          <tbody>
-              <tr>
-                <td>{topBuyer.first_name}</td>
-                <td>{topBuyer.last_name}</td>
-                <td>${USNumberFormat.format(topBuyer.total_portfolio_value || 0)}</td>
-              </tr>
-          </tbody>
-        </Table>
+        <Row>
+          <Col>
+            <h3>Top Buyers</h3>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Total Portfolio Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topBuyers.map(topBuyer => {
+                  return <tr key={topBuyer.last_name}>
+                      <td>{topBuyer.first_name}</td>
+                      <td>{topBuyer.last_name}</td>
+                      <td>${USNumberFormat.format(topBuyer.total_portfolio_value || 0)}</td>
+                    </tr>
+                })}
+              </tbody>
+            </Table>
+          </Col>
+          <Col>
+            <h3>Top Symbols</h3>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+                  <th>Total Bid Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topSymbols.map(topSymbol => {
+                  return <tr key={topSymbol.symbol}>
+                      <td>{topSymbol.symbol}</td>
+                      <td>${USNumberFormat.format(topSymbol.bid_price || 0)}</td>
+                    </tr>
+                })}
+              </tbody>
+            </Table>
+          </Col>
+          <Col>
+            <h3>Total Trades</h3>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <td>{totalTrades}</td>
+                </tr>
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
+
         <h3>Recent Trades</h3>
         <Table striped bordered hover>
           <thead>

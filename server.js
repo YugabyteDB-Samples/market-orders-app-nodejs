@@ -33,19 +33,43 @@ App.get("/trades", async (req, res) => {
 })
 
 App.get("/stats", async (req,res) => {
-    const query = {
+    const buyersQuery = {
         orderBy: {
             total_portfolio_value: "desc"
-        }
+        }, 
+        take: 5
     }
-    let topBuyers;
+    let topBuyers, topSymbols, totalTrades;
     try {
-        topBuyers = await prisma.top_buyers_view.findFirst(query)
+        topBuyers = await prisma.top_buyers_view.findMany(buyersQuery)
+        topSymbols = await prisma.trade.groupBy({
+            by: ['symbol'],
+            _sum: {
+              bid_price: true
+            },
+            orderBy: {
+                _sum: {
+                    bid_price: "desc"
+                }
+            },
+            _count: {
+                id: true
+            }
+        })
+        topSymbols = topSymbols.map(symbol => {
+            return {...symbol._sum, symbol: symbol.symbol};
+        })
+        totalTrades = await prisma.trade.aggregate({
+            _count: {
+                id: true
+            },
+        })
+        totalTrades = totalTrades._count?.id || 0
     } catch(e) {
         throw e
     } finally {
         await prisma.$disconnect();
-        res.json(topBuyers);
+        res.json({topBuyers, topSymbols, totalTrades});
     }
 })
 
