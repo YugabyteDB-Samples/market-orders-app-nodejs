@@ -57,6 +57,8 @@ App.get("/stats", async (req,res) => {
         topSymbols = topSymbols.map(symbol => {
             return {...symbol._sum, symbol: symbol.symbol};
         })
+        // Note: Count aggregations are viewed as an anti-pattern in YugabyteDB
+        // https://support.yugabyte.com/hc/en-us/articles/360060685992-How-to-run-count-query-in-Yugabyte-DB-
         totalTrades = await prisma.trade.aggregate({
             _count: {
                 id: true

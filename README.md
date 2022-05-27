@@ -4,30 +4,26 @@ This application subscribes to the [PubNub Market Orders Stream](https://www.pub
 ## Run using YugabyteDB Managed
 1. [Sign up for YugabyteDB Managed](https://docs.yugabyte.com/preview/yugabyte-cloud/cloud-quickstart/) and create a free cluster.  Additionally, follow this [guide](https://docs.yugabyte.com/preview/yugabyte-cloud/cloud-quickstart/cloud-build-apps/cloud-add-ip/#download-your-cluster-certificate) to download your cluster CA certificate and set up your cluster IP allow list. 
 
-2. Create Database named `market_orders_sample`
-
-3. Run the following to install dependencies (first time only):
+2. Run the following to install dependencies (first time only):
 ```
 cd market-order-app-nodejs
 npm install
 ```
 
-4. Configure your DATABASE_URL environment variable in the .env file:
+3. Configure your DATABASE_URL environment variable in the .env file:
 
 ```
 # format
-DATABASE_URL="postgresql://[DB_USERNAME]:[DB_PASSWORD]@[DB_HOST]:[DB_PORT]/
-market_orders_sample?schema=public&statement_cache_size=0&sslrootcert=[PATH_TO_ROOT_CERT]"
+DATABASE_URL="postgresql://[DB_USERNAME]:[DB_PASSWORD]@[DB_HOST]:5433/
+yugabyte?statement_cache_size=0&sslmode=require"
 
 # example
 DATABASE_URL="postgresql://admin:qwerty12345@us-west-2.foobarbaz.aws.ybdb.io:5433/
-market_orders_sample?schema=public&statement_cache_size=0&sslrootcert=../certs/root.crt"
+yugabyte?statement_cache_size=0&sslmode=require"
 ```
 
-NOTE: Certificate path is relative to the `market-orders-app-nodejs/prisma` directory
 
-
-5. Run the following to initialize database:
+4. Run the following to initialize database:
 
 ```
 # create tables and relations
@@ -54,7 +50,7 @@ npx prisma db seed
 
 ```
 
-6. Run the sample application:
+5. Run the sample application:
 ```
 cd market-orders-client
 npm install
@@ -64,7 +60,7 @@ npm start
 open localhost:8000
 ```
 
-7. Development (optional)
+6. Development (optional)
 ```
 # This will automatically open browser window and proxy requests to the server
 # npm run start-dev
@@ -74,27 +70,23 @@ open localhost:8000
 
 1. [Install YugabyteDB](https://docs.yugabyte.com/quick-start/install/).
 
-2. Create Database named `market_orders_sample`
-
-3. Run the following to install dependencies (first time only):
+2. Run the following to install dependencies (first time only):
 ```
 cd market-order-app-nodejs
 npm install
 ```
 
-4. Configure your DATABASE_URL environment variable in the .env file:
+3. Configure your DATABASE_URL environment variable in the .env file:
 
 ```
 # format
-DATABASE_URL="postgresql://[DB_USERNAME]:[DB_PASSWORD]@[DB_HOST]:[DB_PORT]/
-market_orders_sample?schema=public&statement_cache_size=0"
+DATABASE_URL="postgresql://[DB_USERNAME]:[DB_PASSWORD]@[DB_HOST]:5433/yugabyte?statement_cache_size=0"
 
 # example
-DATABASE_URL="postgresql://yugabyte:yugabyte@127.0.0.1:5433/
-market_orders_sample?schema=public&statement_cache_size=0"
+DATABASE_URL="postgresql://yugabyte:yugabyte@127.0.0.1:5433/yugabyte?statement_cache_size=0"
 ```
 
-5. Run the following to initialize database:
+4. Run the following to initialize database:
 
 ```
 # create tables and relations
@@ -121,7 +113,7 @@ npx prisma db seed
 
 ```
 
-6. Run the sample application:
+5. Run the sample application:
 
 ```
 cd market-orders-client
@@ -132,7 +124,7 @@ npm start
 open localhost:8000
 ```
 
-7. Development (optional)
+6. Development (optional)
 ```
 # This will automatically open browser window and proxy requests to the server
 # npm run start-dev
