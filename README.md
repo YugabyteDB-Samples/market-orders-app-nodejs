@@ -1,6 +1,8 @@
 # Market Orders Steaming to YugabyteDB on Node.js
 This application subscribes to the [PubNub Market Orders Stream](https://www.pubnub.com/developers/realtime-data-streams/financial-securities-market-orders/) via Node.js client and stores the market trades in YugabyteDB.  
 
+Check [this blog post](https://www.yugabyte.com/blog/building-simple-application-yugabytedb-prisma/) for a quick app overview.
+
 ## Run using YugabyteDB Managed
 1. [Sign up for YugabyteDB Managed](https://docs.yugabyte.com/preview/yugabyte-cloud/cloud-quickstart/) and create a free cluster.  Additionally, follow this [guide](https://docs.yugabyte.com/preview/yugabyte-cloud/cloud-quickstart/cloud-build-apps/cloud-add-ip/#download-your-cluster-certificate) to download your cluster CA certificate and set up your cluster IP allow list. 
 
