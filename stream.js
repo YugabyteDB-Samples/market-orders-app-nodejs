@@ -1,6 +1,6 @@
 const PrismaClient =  require('@prisma/client').PrismaClient;
 const prisma = new PrismaClient();
-const STREAM_SUBSCRIPION_KEY = "sub-c-4377ab04-f100-11e3-bffd-02ee2ddab7fe";
+const STREAM_SUBSCRIPION_KEY = "sub-c-99084bc5-1844-4e1c-82ca-a01b18166ca8";
 const STREAM_NAME = "pubnub-market-orders";
 const PubNub = require('pubnub');
 const pubnub = new PubNub({
